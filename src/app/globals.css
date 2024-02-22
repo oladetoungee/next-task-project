@@ -6,3 +6,20 @@ body {
   background-color: rgb(250 250 249);
   color: rgb(12 10 9);
 }
+input {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  outline: none;
+  background-color: black;
+}
+
+input:focus {
+  border: 2px solid white;
+}
+
+input:hover {
+  border: 1px solid white;
+}
