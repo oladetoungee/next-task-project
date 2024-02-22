@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 // Import necessary modules and styles
 import React, { useState } from 'react';
 
@@ -13,18 +14,14 @@ const Register = () => {
   const { username, email, password } = user;
 
   // Handle form submission
-  const registerFunction = () => {
+  const onRegister = () => {
     isFormValid ? console.log('User Registered:', user) : console.log('Form has errors. Please fix them.');
   };
 
   // Handle input change and perform validation
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
-
-    // Update user state
     setUser({ ...user, [name]: value });
-
-    // Validate the input
     validateInput(name, value);
   };
 
@@ -52,7 +49,7 @@ const Register = () => {
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
       <div className='w-[60%] text-white bg-black'>
-        <h1 className="text-3xl text-center font-bold mb-8">Register</h1>
+        <h1 className="text-2xl text-center font-bold m-4">Register</h1>
         <hr />
         <div className="p-8 shadow-md">
           <input
@@ -84,14 +81,15 @@ const Register = () => {
           
           <button
             type="submit"
-            onClick={registerFunction}
-            className={`w-full py-2 rounded transition duration-300   ${
+            onClick={onRegister}
+            className={`w-full py-2 mb-2 rounded transition duration-300   ${
               isFormValid ? ' text-black bg-white' : 'text-gray-700 hover:opacity-80 bg-gray-400 cursor-not-allowed'
             }`}
             disabled={!isFormValid}
           >
             Register
           </button>
+          <Link href="/login" className='text-xs'> Already have an account? </Link>
         </div>
       </div>
     </div>
