@@ -20,19 +20,19 @@ export async function POST(request: NextRequest) {
         }
 
         // Hash the password
-        // const salt = await bcrypt.genSalt(10);
-        // const hashedPassword = await bcrypt.hash(requestBody.password, salt);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(requestBody.password, salt);
 
         // Create a new User model instance with the user data from the request body
-        // requestBody.password = hashedPassword;
-        // await User.create(requestBody);
+        requestBody.password = hashedPassword;
+        await User.create(requestBody);
 
         // If the user is successfully saved to the database, return a success message
         return NextResponse.json({ message: "User registered successfully" }, { status: 201 });
 
     } catch (error: string | any) {
         console.error('Error during user registration:', error);
-        return NextResponse.json({ error: 'Internal Server Erjror' }, { status: 500 });
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }
 

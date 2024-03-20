@@ -1,21 +1,34 @@
 'use client';
 
+import axios from 'axios';
 import Link from 'next/link';
 // Import necessary modules and styles
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const Register = () => {
   // Initialize state for user information and form validation
   const [user, setUser] = useState({ username: '', email: '', password: '' });
   const [errors, setErrors] = useState({ username: '', email: '', password: '' });
   const [isFormValid, setIsFormValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Destructure state for easier usage
   const { username, email, password } = user;
 
   // Handle form submission
-  const onRegister = () => {
-    isFormValid ? console.log('User Registered:', user) : console.log('Form has errors. Please fix them.');
+  const onRegister = async () => {
+ 
+    try {
+      setLoading(true);
+  await axios.post(`/api/users/register`, user);
+  toast.success('User registered successfully');
+
+    } catch (error:any) {
+   toast.error(error.response.data.message || error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Handle input change and perform validation
@@ -87,7 +100,7 @@ const Register = () => {
             }`}
             disabled={!isFormValid}
           >
-            Register
+     {loading ? 'Loading...' : 'Register'}
           </button>
           <Link href="/login" className='text-xs'> Already have an account? </Link>
         </div>
