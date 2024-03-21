@@ -21,8 +21,9 @@ const Register = () => {
  
     try {
       setLoading(true);
-  await axios.post(`/api/users/register`, user);
+ const response = await axios.post(`/api/users/register`, user);
   toast.success('User registered successfully');
+  console.log('User registered successfully:', response.data);
 
     } catch (error:any) {
    toast.error(error.response.data.message || error.message);
