@@ -25,14 +25,14 @@ export async function POST(request: NextRequest) {
         if (!validPassword) {
             return NextResponse.json({ message: "Invalid password" }, { status: 400 });
         }
-        //return success message if user is successfully logged in
-        return NextResponse.json({ message: "User logged in successfully" }, { status: 200 });
-
+   
         //save token as cookie
         const token = jwt.sign({ UserId: existingUser._id }, process.env.TOKEN_SECRET!, { expiresIn: '7d' });
+             //save success message if user is successfully logged in
         const response = NextResponse.json({ message: "User logged in successfully" }, { status: 200 });
         //attach token to response header
-        response.cookies.set('token', token, { httpOnly: true });
+        response.cookies.set('token', token, { httpOnly: true, path: '/', maxAge: 60 * 60 * 24 * 7});
+        return response;
     } catch (error: string | any) {
 
     }
