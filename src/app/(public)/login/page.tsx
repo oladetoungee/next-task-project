@@ -3,8 +3,15 @@
 import Link from 'next/link';
 // Import necessary modules and styles
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+
   // Initialize state for user information and form validation
   const [user, setUser] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({ email: '', password: '' });
@@ -14,8 +21,18 @@ const Login = () => {
   const { email, password } = user;
 
   // Handle form submission
-  const onLogin = () => {
-    isFormValid ? console.log('User Logged In:', user) : console.log('Form has errors. Please fix them.');
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(`/api/users/login`, user);
+      toast.success('User Logged In successfully');
+    router.push('/');
+    } catch (error: any) {
+     toast.error(error.response.data.message || error.message);
+    }
+    finally {
+      setLoading(false);
+    }
   };
 
   // Handle input change and perform validation
@@ -75,7 +92,7 @@ const Login = () => {
             }`}
             disabled={!isFormValid}
           >
-            Log In
+         {loading ? 'Loading...' : 'Login'}
           </button>
           <Link href="/register" className='text-xs '> Don't have an account? Register here </Link>
         </div>

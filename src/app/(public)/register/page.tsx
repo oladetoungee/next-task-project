@@ -18,15 +18,15 @@ const Register = () => {
 
   // Handle form submission
   const onRegister = async () => {
- 
+
     try {
       setLoading(true);
- const response = await axios.post(`/api/users/register`, user);
-  toast.success('User registered successfully');
-  console.log('User registered successfully:', response.data);
+      const response = await axios.post(`/api/users/register`, user);
+      toast.success('User registered successfully');
+      console.log('User registered successfully:', response.data);
 
-    } catch (error:any) {
-   toast.error(error.response.data.message || error.message);
+    } catch (error: any) {
+      toast.error(error.response.data.message || error.message);
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ const Register = () => {
             onChange={handleInputChange}
           />
           <div className="text-red-500">{errors.username}</div>
-          
+
           <input
             type="email"
             name="email"
@@ -83,7 +83,7 @@ const Register = () => {
             onChange={handleInputChange}
           />
           <div className="text-red-500">{errors.email}</div>
-          
+
           <input
             type="password"
             name="password"
@@ -92,16 +92,15 @@ const Register = () => {
             onChange={handleInputChange}
           />
           <div className="text-red-500">{errors.password}</div>
-          
+
           <button
             type="submit"
             onClick={onRegister}
-            className={`w-full py-2 mb-2 rounded transition duration-300   ${
-              isFormValid ? ' text-black bg-white' : 'text-gray-700 hover:opacity-80 bg-gray-400 cursor-not-allowed'
-            }`}
+            className={`w-full py-2 mb-2 rounded transition duration-300   ${isFormValid ? ' text-black bg-white' : 'text-gray-700 hover:opacity-80 bg-gray-400 cursor-not-allowed'
+              }`}
             disabled={!isFormValid}
           >
-     {loading ? 'Loading...' : 'Register'}
+            {loading ? 'Loading...' : 'Register'}
           </button>
           <Link href="/login" className='text-xs'> Already have an account? </Link>
         </div>
